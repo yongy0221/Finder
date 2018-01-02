@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+</head>
+<body>
+            <div class="choice">
+                <div id="choicetop">
+                    <h2 id="choose" style="text-align: center"> Choose the one you prefer!</h2>
+                    <p id="quarter" style="text-align: center">Quarter-final</p>
+                    <p id="semi" style="visibility: hidden; text-align: center">Semi-final</p>
+                    <p id="final" style="visibility: hidden; text-align: center">Final</p>
+                    <p id="third" style="visibility: hidden; text-align: center">Third vs Fourth</p>
+                </div>
+                <div id="choiceleft">
+                    <img class="pics" onmouseover="bigImg(this)" onmouseout="normalImg(this)" id="one" onload="this.alt=pics[i];" 
+                        onclick="clicked1()">
+                </div>
+                <div id="choicemid">
+                        <h1 id="vs">VS</h1>
+                </div>
+                <div id="choiceright">
+                    <img class="pics" onmouseover="bigImg(this)" onmouseout="normalImg(this)" id="two" onload="this.alt=pics[j];" 
+                    onclick="clicked2()">
+                </div>
+                <div id="choicebottom">
+                    <h1 id="res" style="visibility: hidden;">is the Winner!</h1>
+                    <p style="text-align: center"><script type="text/javascript">document.write(first)</script></p>
+                </div>
+                <form action="result.erb" method="GET">
+                    <input type="hidden" id="to_first" name="to_first" />
+                    <input type="hidden" id="to_second" name="to_second" />
+                    <input type="hidden" id="to_third" name="to_third" />
+                    <input type="hidden" id="to_fresh_fried" name="to_fresh_fried" />
+                    <input type="hidden" id="to_thickness" name="to_thickness" />
+                    <input type="hidden" id="to_soup" name="to_soup" />
+                    <input type="hidden" id="to_salt" name="to_salt" />
+                    <input type="hidden" id="to_norm_special" name="to_norm_special" />
+                    <input type="hidden" id="to_spiceLevel" name="to_spiceLevel" />
+                    <input type="hidden" id="to_oil" name="to_oil" />
+                    <input type="hidden" id="to_cold_hot" name="to_cold_hot" />
+                    <input type="submit" id="button" style="visibility: hidden;" value="Show me the result!" />
+                </form>
+            </div>
+
+        
+        
+        <script language="javascript">
+            
+            var pics = ["/images/shin.jpg", "/images/neoguri.jpg", "/images/sesame.jpg", 
+                    "/images/dressing.jpg", "/images/yukkal.jpg", "/images/teumsae.jpg",
+                    "/images/bibim.jpg", "/images/jjapa.jpg"];
+            document.getElementById("button").onclick = function () {
+                window.location ='result.erb';
+            };
+            var semi = [];
+            var final = [];
+            var threefour = [];
+            var first = 4;
+            var second, third;
+            var i = 0;
+            var j = 1;
+            var clickFlag1 = 0;
+            var clickFlag2 = 0;
+            var size = 8;
+            var click = 0;
+            var imgOne = document.getElementById("one");
+            var imgTwo = document.getElementById("two");
+            imgOne.src = pics[i];
+            imgTwo.src = pics[j];
+            var user = {};
+            var ramenArr = [
+                [ 1, 2, 0, 1790, 0, 4, 1, 1 ],
+                [ 1, 2.5, 0, 1700, 0, 3, 1, 1 ],
+                [ 1, 2, 0, 1790, 0, 3.5, 0, 1 ],
+                [ 0, 1, 1, 1060, 1, 1, 1, 0 ],
+                [ 0, 3, 0, 1890, 1, 4, 1, 1 ],
+                [ 1, 2, 0, 2050, 1, 5, 1, 1 ],
+                [ 1, 1, 1, 1190, 1, 2, 1, 1 ],
+                [ 1, 2, 1, 1180, 1, 1, 0, 1 ]
+            ];
+            var ramenStr = ["Shin Ramen", "Neoguri", "Sesame Ramen", "Dressing Noodle", "Yukgaejang Kalgooksoo", "Teumsae Ramen", "Bibim-myeon", "Jjapagetti"];
+            
+            function clicked1() {
+                loop(1);
+            }
+            function clicked2() {
+                loop(2);
+            }
+            function loop(won) {
+                if (click >= 0 && click <= 2) {
+                    if(won == 1)
+                        semi.push(i);
+                    else if(won == 2)
+                        semi.push(j);
+                    i += 2; 
+                    j += 2;
+                    imgOne.src = pics[i];
+                    imgTwo.src = pics[j];
+                    click++;
+                }
+                else if(click == 3) {
+                    document.getElementById("quarter").style.visibility="hidden";
+                    document.getElementById("semi").style.visibility="visible";
+                    if(won == 1)
+                        semi.push(i);
+                    else if(won == 2)
+                        semi.push(j);
+                    i = semi[0];
+                    j = semi[1];
+                    imgOne.src = pics[i];
+                    imgTwo.src = pics[j];
+                    click++;
+                }
+                else if (click == 4) {
+                    if(won == 1) {
+                        final.push(i);
+                        threefour.push(j);
+                    }
+                    else if(won == 2) {
+                        final.push(j);
+                        threefour.push(i);
+                    }
+                    i = semi[2];
+                    j = semi[3];
+                    imgOne.src = pics[i];
+                    imgTwo.src = pics[j];
+                    click++;
+                }
+                else if (click == 5) {
+                    document.getElementById("semi").style.visibility="hidden";
+                    document.getElementById("final").style.visibility="visible";
+                    if(won == 1) {
+                        final.push(i);
+                        threefour.push(j);
+                    }
+                    else if(won == 2) {
+                        final.push(j);
+                        threefour.push(i);
+                    }
+                    i = final[0];
+                    j = final[1];
+                    imgOne.src = pics[i];
+                    imgTwo.src = pics[j];
+                    click++;
+                }
+                else if (click == 6) {
+                    document.getElementById("final").style.visibility="hidden";
+                    document.getElementById("third").style.visibility="visible";
+                    if(won == 1) {
+                        first = i;
+                        second = j;
+                    }
+                    else if(won == 2) {
+                        first = j;
+                        second = i;
+                    }
+                    i = threefour[0];
+                    j = threefour[1];
+                    imgOne.src = pics[i];
+                    imgTwo.src = pics[j];
+                    click++;
+                    document.getElementById("to_first").value=ramenStr[first];
+                    document.getElementById("to_second").value=ramenStr[second];
+                }
+                else if (click == 7) {
+                    if(won == 1) {
+                        third = i;
+                    }
+                    else if(won == 2) {
+                        third = j;
+                    }
+                    data();
+                    document.getElementById("third").style.visibility="hidden";
+                    document.getElementById("button").style.visibility="visible";
+                    imgOne.src=pics[first];
+                    imgTwo.style.visibility="hidden";
+                    document.getElementById("res").style.visibility="visible";
+                    document.getElementById("vs").style.visibility="hidden";
+                    document.getElementById("to_third").value=ramenStr[third];
+                    document.getElementById("choose").style.visibility="hidden";
+                }
+
+            }
+            function data() {
+                user['fresh_fried'] = ramenArr[first][0] * 0.6 + 
+                                        ramenArr[second][0] * 0.3 +
+                                        ramenArr[third][0] * 0.1;
+                user['thickness'] = ramenArr[first][1] * 0.6 + 
+                                        ramenArr[second][1] * 0.3 +
+                                        ramenArr[third][1] * 0.1;
+                user['soup'] = ramenArr[first][2] * 0.6 + 
+                                        ramenArr[second][2] * 0.3 +
+                                        ramenArr[third][2] * 0.1;
+                user['salt'] = ramenArr[first][3] * 0.6 + 
+                                        ramenArr[second][3] * 0.3 +
+                                        ramenArr[third][3] * 0.1;
+                user['norm_special'] = ramenArr[first][4] * 0.6 + 
+                                        ramenArr[second][4] * 0.3 +
+                                        ramenArr[third][4] * 0.1;
+                user['spiceLevel'] = ramenArr[first][5] * 0.6 + 
+                                        ramenArr[second][5] * 0.3 +
+                                        ramenArr[third][5] * 0.1;
+                user['oil'] = ramenArr[first][6] * 0.6 + 
+                                        ramenArr[second][6] * 0.3 +
+                                        ramenArr[third][6] * 0.1;
+                user['cold_hot'] = ramenArr[first][7] * 0.6 + 
+                                        ramenArr[second][7] * 0.3 +
+                                        ramenArr[third][7] * 0.1;
+                // user['fresh_fried'] = user['fresh_fried'].toFixed(2);
+                // user['thickness'] = user['thickness'].toFixed(2);
+                // user['soup'] = user['soup'].toFixed(2);
+                // user['salt'] = user['salt'].toFixed(2);
+                // user['norm_special'] = user['norm_special'].toFixed(2);
+                // user['spiceLevel'] = user['spiceLevel'].toFixed(2);
+                // user['oil'] = user['oil'].toFixed(2);
+                // user['cold_hot'] = user['cold_hot'].toFixed(2);
+                if(user['fresh_fried'] >= 0.5) {
+                    user['fresh_fried'] = "fried";
+                }
+                else {
+                    user['fresh_fried'] = "fresh";
+                }
+                
+                if(user['thickness'] < 2.3 && user['thickness'] >= 1) {
+                    user['thickness'] = "thin";
+                }
+                else if(user['thickness'] >= 2.3 && user['thickness'] <= 2.6) {
+                    user['thickness'] = "of regular thickness";
+                }
+                else {
+                    user['thickness'] = "thicker than regular ramen";
+                }
+                
+                if(user['soup'] >= 0.5) {
+                    user['soup'] = "without broth";
+                }
+                else {
+                    user['soup'] = "with broth";
+                }
+                
+                if(user['salt'] < 1400) {
+                    user['salt'] = "is not a huge fan of salty food";
+                }
+                else if(user['salt'] >= 1400 && user['salt'] <= 1600) {
+                    user['salt'] = "does not mind salty food";
+                }
+                else {
+                    user['salt'] = "is in fond of food with a high sodium content";
+                }
+                
+                if(user['norm_special'] >= 0.5) {
+                    user['norm_special'] = "of unique flavors";
+                }
+                else {
+                    user['norm_special'] = "of conventional flavor";
+                }
+                
+                if(user['spiceLevel'] >= 3) {
+                    user['spiceLevel'] = "with a super spicy kick to it";
+                }
+                else {
+                    user['spiceLevel'] = "with a mild base";
+                }
+                
+                if(user['oil'] >= 0.5) {
+                    user['oil'] = "without additional oil";
+                }
+                else {
+                    user['oil'] = "with additional oil for intensified flavor";
+                }
+                
+                if(user['cold_hot'] >= 0.5) {
+                    user['cold_hot'] = "hot";
+                }
+                else {
+                    user['cold_hot'] = "cold";
+                }
+                
+                document.getElementById("to_fresh_fried").value=user['fresh_fried'];
+                document.getElementById("to_thickness").value=user['thickness'];
+                document.getElementById("to_soup").value=user['soup'];
+                document.getElementById("to_salt").value=user['salt'];
+                document.getElementById("to_norm_special").value=user['norm_special'];
+                document.getElementById("to_spiceLevel").value=user['spiceLevel'];
+                document.getElementById("to_oil").value=user['oil'];
+                document.getElementById("to_cold_hot").value=user['cold_hot'];
+            }
+            
+            
+            function bigImg(x) {
+                x.style.height = "250px";
+                x.style.width = "250px";
+            }
+            
+            function normalImg(x) {
+                x.style.height = "200px";
+                x.style.width = "200px";
+            }
+            
+            imgOne.src=pics[i];
+            imgTwo.src=pics[j];
+    </script>
+    
+    
+</body>

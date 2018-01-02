@@ -1,0 +1,7 @@
+<% @users.last(1).each do |x| %>
+    <p style="padding-bottom: 5px"> My name: <%= x.name %> </p>
+    <p style="padding-bottom: 5px"> My email: <%= x.email %> </p>
+    <p style="padding-bottom: 5px"> My gender: <%= x.gender %> </p>
+    <p style="padding-bottom: 5px"> My birthday: <%= x.birthday %> </p>
+    <p style="padding-bottom: 5px"> My location: <%= x.city %> </p>
+<% end %>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf=8">
+        <title> Welcome to Finder! </title>
+        <link type="text/css" rel="stylesheet" href="pagestyle.css"/>
+    </head>
+    <body>
+        <nav class="container">
+            <h1 id="navname"><a href="page.erb">Finder!</a></h1>
+            <ul>
+                <li id="navlist"><a href="index.erb">Home</a></li>
+                <li id="navlist"><a href="about.erb">About</a></li>
+                <li id="navlist"><a href="https://likelion.net">likeLion</a></li>
+                <li id="navlist"><a href="https://www.ucla.edu">UCLA</a></li>
+            </ul>
+        </nav>
+        
+        <div class="container">
+            <div class="halfleft">
+                <img id="indeximg" src="/images/header2.jpg" alt="NO IMAGE">
+            </div>
+            
+            <div class="halfright">
+                <div class="inputwithin">
+                    <div class="inputhead">
+                        <h2 class="input">Join Finder to find about yourself!</h2>
+                    </div>
+                    <div class="inputform">
+                        <form action="page" method="GET">
+                            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+                            <label for="username">Email: </label>
+                            <input type="email" name="email">
+                            <br/>
+                            <label for="password">Password: </label>
+                            <input type="password" name="password">
+                            <br/>
+                            <label for="first_name">First Name: </label>
+                            <input type="text" name="first_name">
+                            <br/>
+                            <label for="last_name">Last Name: </label>
+                            <input type="text" name="last_name">
+                            <br/>
+                            <label for="gender">Gender: </label>
+                            <input type="radio" name="gender" value="Male" checked> Male
+                            <input type="radio" name="gender" value="Female"> Female
+                            <br/>
+                            <label for="birthday">Birthday: </label>
+                            <input type="date" name="birthday">
+                            <br/>
+                            <label for="city">City: </label>
+                            <input type="text" name="city">
+                            <br/>
+                            <br/>
+                            <input type="submit" value="Create Account">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
